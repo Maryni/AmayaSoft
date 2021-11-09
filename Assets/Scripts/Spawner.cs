@@ -1,42 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawner : MonoBehaviour
 {
-    #region private variables
-
-    private GameObject objectForSpawn;
-    private Transform transformWhenSpawn;
-
-    #endregion private variables
-
-    #region public void
-
-    public void GetObject(GameObject gameObject)
+    public void Spawn(GameObject objectForSpawn, Transform transformWhenSpawn, Sprite sprite, string name, int count)
     {
-        objectForSpawn = gameObject;
-    }
-
-    public void GetTransform(Transform transform)
-    {
-        transformWhenSpawn = transform;
-    }
-
-    public void Spawn(int count)
-    {
-        if (objectForSpawn != null && transformWhenSpawn != null)
+        for (int i = 0; i < count; i++)
         {
-            for (int i = 0; i < count; i++)
-            {
-                Instantiate(objectForSpawn, transformWhenSpawn);
-            }
-        }
-        else
-        {
-            Debug.LogError("[Object for Spawn] or [Transform When Object will be spawned] is null");
+            var temp = Instantiate(objectForSpawn, transformWhenSpawn);
+            temp.name = name;
+            temp.GetComponentInChildren<Button>().gameObject.GetComponentInChildren<Image>().sprite = sprite;
         }
     }
-
-    #endregion public void
 }

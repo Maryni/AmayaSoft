@@ -38,6 +38,8 @@ MonoBehaviour:
     sprite: {fileID: 3547489320769246608, guid: f71c3fb19e5e5fb4ab3547cd70c2c210,
       type: 3}
   - id: 9
-    sprite: {fileID: 21300000, guid: 006958d1a3db1814093de24e82fddf99, type: 3}
+    sprite: {fileID: -1155199509967091035, guid: 006958d1a3db1814093de24e82fddf99,
+      type: 3}
   - id: 10
-    sprite: {fileID: 21300000, guid: 7aeba117157172c418c5784f65172982, type: 3}
+    sprite: {fileID: 4142021021139464533, guid: 7aeba117157172c418c5784f65172982,
+      type: 3}
