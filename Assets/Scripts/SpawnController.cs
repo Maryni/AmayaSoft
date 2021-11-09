@@ -39,6 +39,7 @@ public class SpawnController : MonoBehaviour
     private void Start()
     {
         Spawning();
+        //test
     }
 
     #endregion Unity functions
