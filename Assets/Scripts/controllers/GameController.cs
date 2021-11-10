@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     private Transform parentCubes;
 
+    private CardData takenCardData;
+
     #endregion private variables
 
     #region Unity functions
@@ -34,10 +36,25 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         spawnController.SetData(allDatas);
-        spawnController.SetLevel(Level.Low);
+        spawnController.StartLevel();
         spawnController.Spawning();
         textController.ChangeText(spawnController.GetLastFavoriteItem().Id);
+        spawnController.GetUnityActionForFavoriteItem(
+            () => spawnController.ChangingLevel(),
+            () => spawnController.Spawning(),
+            () => spawnController.SetLocalActionsToSpawnedItem(),
+            () => textController.ChangeText(spawnController.GetLastFavoriteItem().Id)
+            );
     }
 
     #endregion Unity functions
+
+    #region public void
+
+    public void Clicked(CardData cardData)
+    {
+        takenCardData = cardData;
+    }
+
+    #endregion public void
 }

@@ -23,10 +23,10 @@ MonoBehaviour:
     sprite: {fileID: -7900951133411543555, guid: f71c3fb19e5e5fb4ab3547cd70c2c210,
       type: 3}
   - id: 4
-    sprite: {fileID: -7398325283844340781, guid: f71c3fb19e5e5fb4ab3547cd70c2c210,
+    sprite: {fileID: 2267071060405275165, guid: f71c3fb19e5e5fb4ab3547cd70c2c210,
       type: 3}
   - id: 5
-    sprite: {fileID: 2267071060405275165, guid: f71c3fb19e5e5fb4ab3547cd70c2c210,
+    sprite: {fileID: -7398325283844340781, guid: f71c3fb19e5e5fb4ab3547cd70c2c210,
       type: 3}
   - id: 6
     sprite: {fileID: -7015292045520539579, guid: f71c3fb19e5e5fb4ab3547cd70c2c210,

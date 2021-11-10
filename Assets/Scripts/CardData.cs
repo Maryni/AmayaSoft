@@ -22,4 +22,14 @@ public class CardData
     public Sprite Sprite => sprite;
 
     #endregion public variables
+
+    #region constructor
+
+    public CardData(string id, Sprite sprite)
+    {
+        this.id = id;
+        this.sprite = sprite;
+    }
+
+    #endregion constructor
 }
