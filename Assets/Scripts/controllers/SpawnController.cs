@@ -37,7 +37,7 @@ public class SpawnController : MonoBehaviour
     private int countNeedSpawnCurrentLevel;
     private Coroutine setActionsCoroutine;
     private UnityAction unityActionFavoriteItem;
-    private UnityAction unityActionForFinishingGame;
+    private UnityAction unityActionFinishGame;
 
     #endregion private variables
 
@@ -59,6 +59,7 @@ public class SpawnController : MonoBehaviour
     {
         SetLevel(Level.Low);
         SetLocalActionsToSpawnedItem();
+        Spawning();
     }
 
     public void SetData(AllDatasBundle data)
@@ -93,22 +94,40 @@ public class SpawnController : MonoBehaviour
         }
     }
 
+    public void GetUnityActionForFinishGame(params UnityAction[] unityAction)
+    {
+        for (int i = 0; i < unityAction.Length; i++)
+        {
+            unityActionFinishGame += unityAction[i];
+        }
+    }
+
     public void ChangingLevel()
     {
+        if (currentLevel == Level.High)
+        {
+            unityActionFinishGame?.Invoke();
+            StopCoroutine(setActionsCoroutine);
+            setActionsCoroutine = null;
+        }
+        if (currentLevel == Level.Medium)
+        {
+            SetLevel(Level.High);
+            RemoveAllChilds();
+        }
         if (currentLevel == Level.Low)
         {
             SetLevel(Level.Medium);
+            RemoveAllChilds();
         }
-        else if (currentLevel == Level.Medium)
+    }
+
+    public void BounceEffectForSpawnedItems()
+    {
+        for (int i = 0; i < listGameobjectsSpawned.Count; i++)
         {
-            SetLevel(Level.High);
+            listGameobjectsSpawned[i].transform.DOShakePosition(1.5f, 6, 4);
         }
-        else
-        {
-            print("Restart need");
-            return;
-        }
-        RemoveAllChilds();
     }
 
     #endregion public void
@@ -152,12 +171,13 @@ public class SpawnController : MonoBehaviour
                 else
                 {
                     tempGameObject.GetComponent<Item>().RemoveEvents();
+                    //tempGameObject.GetComponent<Item>().AddEvent(() => StartFavoritItemCoroutine());
                     tempGameObject.GetComponent<Item>().AddEvent(() => tempGameObject.transform.GetChild(0).transform.GetChild(0).transform.DOShakePosition(5, 3, 7));
                     tempGameObject.GetComponent<Item>().AddEvent(unityActionFavoriteItem);
                 }
             }
         }
-
+        BounceEffectForSpawnedItems();
         setActionsCoroutine = null;
     }
 

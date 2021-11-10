@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -13,9 +14,7 @@ public class GameController : MonoBehaviour
     private AllDatasBundle allDatas;
 
     [SerializeField]
-    private Transform parentCubes;
-
-    private CardData takenCardData;
+    private GameObject panelRestart;
 
     #endregion private variables
 
@@ -35,26 +34,39 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        spawnController.SetData(allDatas);
-        spawnController.StartLevel();
-        spawnController.Spawning();
-        textController.ChangeText(spawnController.GetLastFavoriteItem().Id);
-        spawnController.GetUnityActionForFavoriteItem(
-            () => spawnController.ChangingLevel(),
-            () => spawnController.Spawning(),
-            () => spawnController.SetLocalActionsToSpawnedItem(),
-            () => textController.ChangeText(spawnController.GetLastFavoriteItem().Id)
-            );
+        StartLevelAndChangeText();
     }
 
     #endregion Unity functions
 
     #region public void
 
-    public void Clicked(CardData cardData)
+    public void RestartGame()
     {
-        takenCardData = cardData;
+        SceneManager.LoadSceneAsync(0);
+        panelRestart.SetActive(false);
+        StartLevelAndChangeText();
     }
 
     #endregion public void
+
+    #region private void
+
+    private void StartLevelAndChangeText()
+    {
+        spawnController.SetData(allDatas);
+        spawnController.StartLevel();
+        textController.ChangeText(spawnController.GetLastFavoriteItem().Id);
+        spawnController.GetUnityActionForFavoriteItem(
+                () => spawnController.ChangingLevel(),
+                () => spawnController.Spawning(),
+                () => spawnController.SetLocalActionsToSpawnedItem(),
+                () => textController.ChangeText(spawnController.GetLastFavoriteItem().Id)
+                );
+        spawnController.GetUnityActionForFinishGame(
+            () => panelRestart.SetActive(true)
+            );
+    }
+
+    #endregion private void
 }
